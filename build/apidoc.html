@@ -61,12 +61,104 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-s3">module gulp-s3</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-s3.gulp-s3">
+            function <span class="apidocSignatureSpan"></span>gulp-s3
+            <span class="apidocSignatureSpan">(aws, options)</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.gulp-s3" id="apidoc.module.gulp-s3">module gulp-s3</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-s3.gulp-s3" id="apidoc.element.gulp-s3.gulp-s3">
+        function <span class="apidocSignatureSpan"></span>gulp-s3
+        <span class="apidocSignatureSpan">(aws, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">gulp-s3 = function (aws, options) {
+  options = options || {};
+
+  var client = knox.createClient(aws);
+  var waitTime = 0;
+  var regexGzip = /\.([a-z]{2,})\.gz$/i;
+  var regexGeneral = /\.([a-z]{2,})$/i;
+
+  return es.map(function (file, finished) {
+    if (!file.isBuffer()) { finished(null, file); return; }
+
+    var uploadPath = file.path.replace(file.base, options.uploadPath || &#x27;&#x27;);
+    uploadPath = uploadPath.replace(new RegExp(&#x27;\\\\&#x27;, &#x27;g&#x27;), &#x27;/&#x27;);
+
+    var headers = { &#x27;x-amz-acl&#x27;: &#x27;public-read&#x27; };
+
+    if (options.headers) {
+      for (var key in options.headers) {
+        headers[key] = options.headers[key];
+      }
+    }
+
+    if (regexGzip.test(file.path)) {
+      headers[&#x27;Content-Encoding&#x27;] = &#x27;gzip&#x27;;
+      if (options.gzippedOnly) {
+        uploadPath = uploadPath.substring(0, uploadPath.length - 3);
+      }
+    } else if (options.gzippedOnly) {
+      return file;
+    }
+
+    // Set content type based on file extension
+    if (!headers[&#x27;Content-Type&#x27;] &#x26;&#x26; regexGeneral.test(uploadPath)) {
+      headers[&#x27;Content-Type&#x27;] = mime.lookup(uploadPath);
+      if (options.encoding) {
+        headers[&#x27;Content-Type&#x27;] += &#x27;; charset=&#x27; + options.encoding;
+      }
+    }
+
+    var contentLength = 0;
+    if(file.stat != null)
+      contentLength = file.stat.size; // In case of a stream
+    else
+      contentLength = file.contents.length; // It may be a buffer
+
+    headers[&#x27;Content-Length&#x27;] = contentLength;
+
+    client.putBuffer(file.contents, uploadPath, headers, function(err, res) {
+      if (err || res &#x26;&#x26; res.statusCode !== 200) {
+        gutil.log(gutil.colors.red(&#x27;[FAILED]&#x27;, file.path + &#x22; -&#x3e; &#x22; + uploadPath));
+
+        if (err) {
+          gutil.log(gutil.colors.red(&#x27;  AWS ERROR:&#x27;, err));
+          throw new Error(err);
+        }
+
+        if (res &#x26;&#x26; res.statusCode !== 200){
+          gutil.log(gutil.colors.red(&#x27;  HTTP STATUS:&#x27;, res.statusCode));
+          throw new Error(&#x27;HTTP Status Code: &#x27; + res.statusCode);
+        }
+
+        finished(err, null)
+      } else {
+        gutil.log(gutil.colors.green(&#x27;[SUCCESS]&#x27;) + &#x27; &#x27; + gutil.colors.grey(file.path) + gutil.colors.green(&#x22; -&#x3e; &#x22;) + uploadPath
+);
+        res.resume();
+        finished(null, file)
+      }
+    });
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 </div>
 

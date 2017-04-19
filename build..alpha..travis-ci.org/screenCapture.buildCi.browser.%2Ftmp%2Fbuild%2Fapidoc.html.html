@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/nitaigao/gulp-s3"
-
-    >gulp-s3 (v0.11.0)</a>
+    <a href="https://github.com/nitaigao/gulp-s3">gulp-s3 (v0.11.0)</a>
 </h1>
 <h4>Uploads files to s3</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-s3">module gulp-s3</a><ol>
 
@@ -96,10 +89,10 @@
   return es.map(function (file, finished) {
     if (!file.isBuffer()) { finished(null, file); return; }
 
-    var uploadPath = file.path.replace(file.base, options.uploadPath || &#x27;&#x27;);
-    uploadPath = uploadPath.replace(new RegExp(&#x27;\\\\&#x27;, &#x27;g&#x27;), &#x27;/&#x27;);
+    var uploadPath = file.path.replace(file.base, options.uploadPath || '');
+    uploadPath = uploadPath.replace(new RegExp('\\\\', 'g'), '/');
 
-    var headers = { &#x27;x-amz-acl&#x27;: &#x27;public-read&#x27; };
+    var headers = { 'x-amz-acl': 'public-read' };
 
     if (options.headers) {
       for (var key in options.headers) {
@@ -108,7 +101,7 @@
     }
 
     if (regexGzip.test(file.path)) {
-      headers[&#x27;Content-Encoding&#x27;] = &#x27;gzip&#x27;;
+      headers['Content-Encoding'] = 'gzip';
       if (options.gzippedOnly) {
         uploadPath = uploadPath.substring(0, uploadPath.length - 3);
       }
@@ -117,10 +110,10 @@
     }
 
     // Set content type based on file extension
-    if (!headers[&#x27;Content-Type&#x27;] &#x26;&#x26; regexGeneral.test(uploadPath)) {
-      headers[&#x27;Content-Type&#x27;] = mime.lookup(uploadPath);
+    if (!headers['Content-Type'] &amp;&amp; regexGeneral.test(uploadPath)) {
+      headers['Content-Type'] = mime.lookup(uploadPath);
       if (options.encoding) {
-        headers[&#x27;Content-Type&#x27;] += &#x27;; charset=&#x27; + options.encoding;
+        headers['Content-Type'] += '; charset=' + options.encoding;
       }
     }
 
@@ -130,25 +123,25 @@
     else
       contentLength = file.contents.length; // It may be a buffer
 
-    headers[&#x27;Content-Length&#x27;] = contentLength;
+    headers['Content-Length'] = contentLength;
 
     client.putBuffer(file.contents, uploadPath, headers, function(err, res) {
-      if (err || res &#x26;&#x26; res.statusCode !== 200) {
-        gutil.log(gutil.colors.red(&#x27;[FAILED]&#x27;, file.path + &#x22; -&#x3e; &#x22; + uploadPath));
+      if (err || res &amp;&amp; res.statusCode !== 200) {
+        gutil.log(gutil.colors.red('[FAILED]', file.path + " -&gt; " + uploadPath));
 
         if (err) {
-          gutil.log(gutil.colors.red(&#x27;  AWS ERROR:&#x27;, err));
+          gutil.log(gutil.colors.red('  AWS ERROR:', err));
           throw new Error(err);
         }
 
-        if (res &#x26;&#x26; res.statusCode !== 200){
-          gutil.log(gutil.colors.red(&#x27;  HTTP STATUS:&#x27;, res.statusCode));
-          throw new Error(&#x27;HTTP Status Code: &#x27; + res.statusCode);
+        if (res &amp;&amp; res.statusCode !== 200){
+          gutil.log(gutil.colors.red('  HTTP STATUS:', res.statusCode));
+          throw new Error('HTTP Status Code: ' + res.statusCode);
         }
 
         finished(err, null)
       } else {
-        gutil.log(gutil.colors.green(&#x27;[SUCCESS]&#x27;) + &#x27; &#x27; + gutil.colors.grey(file.path) + gutil.colors.green(&#x22; -&#x3e; &#x22;) + uploadPath
+        gutil.log(gutil.colors.green('[SUCCESS]') + ' ' + gutil.colors.grey(file.path) + gutil.colors.green(" -&gt; ") + uploadPath
 );
         res.resume();
         finished(null, file)
@@ -168,3 +161,4 @@
     ]
 </div>
 </div>
+</body></html>
