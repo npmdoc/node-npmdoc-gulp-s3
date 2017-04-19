@@ -1,9 +1,14 @@
-# api documentation for  [gulp-s3 (v0.11.0)](https://github.com/nitaigao/gulp-s3)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-s3.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-s3) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-s3.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-s3)
+# npmdoc-gulp-s3
+
+#### api documentation for  [gulp-s3 (v0.11.0)](https://github.com/nitaigao/gulp-s3)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-s3.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-s3) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-s3.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-s3)
+
 #### Uploads files to s3
 
-[![NPM](https://nodei.co/npm/gulp-s3.png?downloads=true)](https://www.npmjs.com/package/gulp-s3)
+[![NPM](https://nodei.co/npm/gulp-s3.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/gulp-s3)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-gulp-s3/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-gulp-s3_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-gulp-s3/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-gulp-s3/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-gulp-s3/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-gulp-s3/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-gulp-s3/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-gulp-s3/build/screenCapture.npmPackageListing.svg)
 
@@ -60,13 +65,11 @@
     "main": "./index.js",
     "maintainers": [
         {
-            "name": "nkostelnik",
-            "email": "nkostelnik@gmail.com"
+            "name": "nkostelnik"
         }
     ],
     "name": "gulp-s3",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git://github.com/nitaigao/gulp-s3.git"
@@ -77,16 +80,6 @@
     "version": "0.11.0"
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module gulp-s3](#apidoc.module.gulp-s3)
-
-
-
-# <a name="apidoc.module.gulp-s3"></a>[module gulp-s3](#apidoc.module.gulp-s3)
 
 
 
